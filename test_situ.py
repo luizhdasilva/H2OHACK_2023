@@ -2,22 +2,38 @@
 
 import numpy as np
 import pandas as pd
+import os, sys 
+from glob import glob 
+import datetime as dt 
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 
 if __name__=='__main__':
-    df = pd.read_csv('./DATASET/IISD_ELA_Sites1,2,3_Lakes_Ref_Chem_2015_2020.csv')
-    # df2 = pd.pivot(df, columns='characteristic_name')
-    # print(df2.head())
+    # flist = glob('./DATASET/*.csv')
+    # for f in flist:
+    #     df = pd.read_csv(f)
+    #     print(df.columns)
+    # df = pd.read_csv('./DATASET/IISD_ELA_Sites1,2,3_Lakes_Ref_Chem_2015_2020.csv')
+    df = pd.read_csv('./DATASET/IISD_ELA_Sites1,2,3_Lakes_Ref_Secchi_2015_2020.csv')
+    # print(df['characteristic_name'].dtype)
+    # print(df['activity_media_name'].dtype)
+    # df['activity_start_time'] = pd.to_datetime(df['activity_start_time'])
+    for col in df.columns:
+        if 'date' in col:
+            try:
+                df[col] = pd.to_datetime(df[col])
+            except:
+                pass 
+    for col in df.columns:
+        if is_datetime(df[col]):
+            if df[col].isnull().any():
+                print(col)
+    # print(df['activity_start_time'].isnull().any())
+    # print(pd.to_datetime(['1']))
 
-    df2 = df[df['characteristic_name'].isin(['DIC','NO3'])]
-    print(df2.head())
-    # # Create a DataFrame in long format
-    # df = pd.DataFrame({
-    # 'team': ['A', 'A', 'A', 'A', 'B', 'B', 'B', 'B'],
-    # 'player': [1, 2, 3, 4, 1, 2, 3, 4],
-    # 'points': [11, 8, 10, 6, 12, 5, 9, 4]
-    # })
-
-    # # Pivot the DataFrame from long format to wide format
-    # df = pd.pivot(df, columns='team')
-    # print(df.head())
+    # print(df['activity_start_date'].dtype)
+    # dt_obj = pd.to_datetime([dt.datetime(2000,1,1,1)])
+    # print(dt_obj.dtype)
+    # is_datetime(df['activity_start_date'])
+    # # print(isinstance(df['activity_start_date'], ))
+    # print(isinstance(df['characteristic_name'].dtype, object))

@@ -9,6 +9,11 @@ Created on October 2023
 import streamlit as st
 import plotly.express as px
 import pandas as pd
+import datetime as dt 
+
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
+
+from df_filter import (df_filter, df_filter_container)
 
 # Function to load data
 def load_data():
@@ -31,16 +36,7 @@ data = load_data()
 # Main section for data visualization
 if data is not None:
 
-    if 'characteristic_name' in data.columns:
-        characteristic_name_unique = data['characteristic_name'].unique()
-        characteristic_name = st.multiselect(
-            "Choose characteristics", characteristic_name_unique, 
-            characteristic_name_unique[0]
-        )
-        if not characteristic_name:
-            st.error("Please select at least one characteristics.")
-        else:
-            data = data[data['characteristic_name'].isin(characteristic_name)]
+    data = df_filter(data)
 
     st.write('Loaded Data:')
     st.write(data)
