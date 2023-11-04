@@ -1,7 +1,8 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
-
+from datetime import datetime
+import numpy as np
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 def df_filter(data):
@@ -9,10 +10,8 @@ def df_filter(data):
     # Will skip columns like "start_time" or "version"
     # for col in data.columns:
     #     if 'date' in col:
-    #         try: 
-    #             data[col] = pd.to_datetime(data[col])
-    #         except:
-    #             pass 
+    #         for i in np.arange(data.shape[0]):
+    #             data[col][i] = datetime.strptime(data[col][i],'%Y-%m-%d')
 
     # Add streamlit control gadgets 
     for col in data.columns:
@@ -32,13 +31,12 @@ def df_filter(data):
                 data = data.loc[data[col].between(start_date, end_date)]
 
         # for now the main filtering function. The date filter is sometimes buggy
-        elif isinstance(data[col].dtype, pd.CategoricalDtype) or ((data[col].nunique() < 30) and (data[col].nunique() > 1)):
-            user_cat_input = st.multiselect(
+        elif (data[col].dtype != np.number) and ((data[col].nunique() < 30) and (data[col].nunique() > 1)):
+            user_cat_input = st.sidebar.selectbox(
                 f"Values for {col} ({data[col].nunique()} in total)",
-                data[col].unique(),
-                default=list(data[col].unique()),
-            )
-            data = data[data[col].isin(user_cat_input)]
+                options=data[col].unique())
+            st.session_state[col] = col
+            data = data[data[col].isin([user_cat_input])]
 
     return data
 
@@ -54,6 +52,6 @@ def df_filter_container(data):
                     data[col].unique(),
                     default=list(data[col].unique()),
                 )
+                
                 data = data[data[col].isin(user_cat_input)]
-
     return data
