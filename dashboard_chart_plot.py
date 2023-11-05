@@ -68,11 +68,12 @@ def add_dashboard_line(data_x,data_y):
                                 'legendOffset': -50,
                                 'legendPosition': 'middle'
                             },
+                            lineWidth={st.session_state['line_width']},
                             pointSize = {0},
-                            colors = {'#FF0000'},
-                            pointColor = {'#FF0000'},
+                            colors = {st.session_state['data_color']},
+                            pointColor = {st.session_state['data_color']},
                             pointBorderWidth = {0},
-                            pointBorderColor = {'#FF0000'},
+                            pointBorderColor = {st.session_state['data_color']},
                             pointLabelYOffset = {-12},
                             useMesh = {'true'},
                             legends = [
@@ -102,12 +103,28 @@ def add_dashboard_line(data_x,data_y):
                                 }
                             ],
                             theme={
-                                "background": "#000000",
-                                "textColor": "white",
+                                "background": st.session_state['bkg_color'],
+                                "textColor": st.session_state['text_color'],
                                 "tooltip": {
                                     "container": {
                                         "background": "#FFFFFF",
                                         "color": "#31333F",
+                                    }
+                                },
+                                'axis':{
+                                    "legend":{
+                                        "text":{
+                                            "fontSize": st.session_state['font_size']+2,
+                                            "outlineWidth": 0,
+                                            "outlineColor": "transparent"
+                                            }
+                                        },
+                                    "ticks": {
+                                        "text": {
+                                            "fontSize": st.session_state['font_size'],
+                                            "outlineWidth": 0,
+                                            "outlineColor": "transparent"
+                                        }
                                     }
                                 }
                             }
@@ -153,13 +170,13 @@ def add_dashboard_bar(data_x,data_y):
                             margin={'top': 50, 'right': 90, 'bottom': 100, 'left': 60},
                             keys=["y"],
                             indexBy="x",
-                            padding={0.6},
+                            padding={1-st.session_state['bar_width']},
                             valueScale={ "type": 'linear' },
                             indexScale={ "type": 'band'},
-                            colors={'#FF0000'},
+                            colors=st.session_state['data_color'],
                             axisBottom = {
                                 'orient': 'bottom',
-                                'tickSize': 5,
+                                'tickSize': st.session_state['font_size'],
                                 'tickPadding': 5,
                                 'tickRotation': 45,
                                 'legend': st.session_state['x_label'],
@@ -168,7 +185,7 @@ def add_dashboard_bar(data_x,data_y):
                             },
                             axisLeft = {
                                 'orient': 'left',
-                                'tickSize': 5,
+                                'tickSize': st.session_state['font_size'],
                                 'tickPadding': 5,
                                 'tickRotation': 0,
                                 'legend': st.session_state['y_label'],
@@ -185,12 +202,26 @@ def add_dashboard_bar(data_x,data_y):
                             ]
                         },
                             theme={
-                                "background": "#000000",
-                                "textColor": "white",
+                                "background": st.session_state['bkg_color'],
+                                "textColor": st.session_state['text_color'],
                                 "tooltip": {
                                     "container": {
                                         "background": "#FFFFFF",
                                         "color": "#31333F",
+                                    }
+                                },
+                                'axis':{
+                                    'legend':{
+                                        'text':{
+                                            'fontSize': st.session_state['font_size']+2
+                                            }
+                                        },
+                                    "ticks": {
+                                        "text": {
+                                            "fontSize": st.session_state['font_size'],
+                                            "outlineWidth": 0,
+                                            "outlineColor": "transparent"
+                                        }
                                     }
                                 }
                             }
@@ -261,10 +292,11 @@ def add_dashboard_scatter(data_x,data_y):
                                 'legendPosition': 'middle'
                             },
                             lineWidth={0},
-                            pointSize = {10},
-                            pointColor = {'#FF0000'},
+                            colors = {st.session_state['data_color']},
+                            pointSize = {st.session_state['marker_size']},
+                            pointColor = {st.session_state['data_color']},
                             pointBorderWidth = {2},
-                            pointBorderColor = {'#FF0000'},
+                            pointBorderColor = {st.session_state['data_color']},
                             pointLabelYOffset = {-12},
                             useMesh = {'true'},
                             legends = [
@@ -294,12 +326,26 @@ def add_dashboard_scatter(data_x,data_y):
                                 }
                             ],
                             theme={
-                                "background": "#000000",
-                                "textColor": "white",
+                                "background": st.session_state['bkg_color'],
+                                "textColor": st.session_state['text_color'],
                                 "tooltip": {
                                     "container": {
                                         "background": "#FFFFFF",
                                         "color": "#31333F",
+                                    }
+                                },
+                                'axis':{
+                                    'legend':{
+                                        'text':{
+                                            'fontSize': st.session_state['font_size']+2
+                                            }
+                                        },
+                                    "ticks": {
+                                        "text": {
+                                            "fontSize": st.session_state['font_size'],
+                                            "outlineWidth": 0,
+                                            "outlineColor": "transparent"
+                                        }
                                     }
                                 }
                             }

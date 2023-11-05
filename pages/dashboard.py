@@ -9,6 +9,7 @@ Created on Tue Oct 31 14:01:42 2023
 import streamlit as st
 import pandas as pd
 import numpy as np
+import dashboard_chart_plot as dcp
 from streamlit_elements import elements, dashboard, mui, html
 
 # Function to set themett
@@ -27,14 +28,15 @@ def display_image_page():
 display_image_page()
 
 # Main section for data visualization
-# Sidebar for user inputs
-if st.session_state['plot_type'] == 'Line':
-    fig = px.line(st.session_state['dataset'], 
-                 x=st.session_state['x'], y=st.session_state['y'], title='Line Chart')
-    st.plotly_chart(fig)
 
-elif st.session_state['plot_type'] == 'Bar':
 
-    fig = px.bar(st.session_state['dataset'],
-                 x=st.session_state['x'], y=st.session_state['y'], title='Bar Chart')
-    st.plotly_chart(fig)
+
+if 'plot_type' in st.session_state:
+    # Prepare the figure object
+    
+        if st.session_state['plot_type'] == 'Line':
+            dcp.add_dashboard_line(st.session_state['data_x'],st.session_state['data_y'])
+        elif st.session_state['plot_type'] == 'Bar':
+            dcp.add_dashboard_bar(st.session_state['data_x'],st.session_state['data_y'])
+        elif st.session_state['plot_type'] == 'Scatter':
+            dcp.add_dashboard_scatter(st.session_state['data_x'],st.session_state['data_y'])
