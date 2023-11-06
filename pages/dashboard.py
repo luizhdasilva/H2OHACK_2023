@@ -28,15 +28,12 @@ def display_image_page():
 display_image_page()
 
 # Main section for data visualization
-
-
-
 if 'plot_type' in st.session_state:
     # Prepare the figure object
     
-        if st.session_state['plot_type'] == 'Line':
-            dcp.add_dashboard_line(st.session_state['data_x'],st.session_state['data_y'])
-        elif st.session_state['plot_type'] == 'Bar':
-            dcp.add_dashboard_bar(st.session_state['data_x'],st.session_state['data_y'])
-        elif st.session_state['plot_type'] == 'Scatter':
-            dcp.add_dashboard_scatter(st.session_state['data_x'],st.session_state['data_y'])
+    if st.session_state['plot_type'] == 'Line':
+        dcp.add_dashboard_line(st.session_state['data_x'],st.session_state['data_y'])
+    elif st.session_state['plot_type'] == 'Bar':
+        dcp.add_dashboard_bar(st.session_state['data_x'],st.session_state['data_y'])
+    elif st.session_state['plot_type'] == 'Scatter':
+        dcp.add_dashboard_scatter(st.session_state['data_x'],st.session_state['data_y'])

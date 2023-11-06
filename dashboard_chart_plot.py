@@ -3,7 +3,7 @@ from streamlit_elements import dashboard, elements, mui, nivo, html
 
 
 # LINE CHART
-def add_dashboard_line(data_x,data_y):
+def add_dashboard_line(data_x,data_y,layout=None):
     
     # Transform the arrays into nivo structure
     data1 = [{"x": i, "y": j} for i, j in zip(data_x, data_y)]
@@ -11,15 +11,16 @@ def add_dashboard_line(data_x,data_y):
     # Create the final dictionary with the transformed data
     data_dic = [{"id":st.session_state['site'],"data": data1}]
 
-    layout = [
-    dashboard.Item("chart_1", 0, 0, 5, 3),
-    ]
+    if layout is None: 
+        layout = [
+        dashboard.Item(f"chart_{st.session_state['fig']}", 0, 0, 5, 3),
+        ]
 
 
     with elements("dashboard"):
         with mui.Paper:
             with mui.Typography:
-                html.h1("Line Chart",
+                html.h1(f"chart_{st.session_state['fig']}",
                     css={
                         "backgroundColor": "#808080",
                         "color":"white",
@@ -32,7 +33,7 @@ def add_dashboard_line(data_x,data_y):
                     })
 
         with dashboard.Grid(layout, draggableHandle=".draggable"):
-            with mui.Card(key="chart_1", 
+            with mui.Card(key=f"chart_{st.session_state['fig']}", 
                           sx={"color": 'white', 'bgcolor': 'text.disable', 
                               "display": "flex", 'borderRadius': 2,  
                               "flexDirection": "column"}):
@@ -140,13 +141,13 @@ def add_dashboard_bar(data_x,data_y):
     data_dic = data1
 
     layout = [
-    dashboard.Item("chart_1", 0, 0, 5, 3),
+    dashboard.Item(f"chart_{st.session_state['fig']}", 0, 0, 5, 3),
     ]
 
     with elements("dashboard"):
         with mui.Paper:
             with mui.Typography:
-                html.h1("Bar Chart",
+                html.h1(f"chart_{st.session_state['fig']}",
                     css={
                         "backgroundColor": "#808080",
                         "color":"white",
@@ -159,7 +160,7 @@ def add_dashboard_bar(data_x,data_y):
                     })
 
         with dashboard.Grid(layout, draggableHandle=".draggable"):
-            with mui.Card(key="chart_1", 
+            with mui.Card(key=f"chart_{st.session_state['fig']}", 
                           sx={"color": 'white', 'bgcolor': 'text.disable', 
                               "display": "flex", 'borderRadius': 2,  
                               "flexDirection": "column"}):
@@ -237,13 +238,14 @@ def add_dashboard_scatter(data_x,data_y):
     data_dic = [{"id":st.session_state['site'],"data": data1}]
 
     layout = [
-    dashboard.Item("chart_1", 0, 0, 5, 3),
+    dashboard.Item(f"chart_{st.session_state['fig']}", 0, 0, 5, 3),
     ]
+
 
     with elements("dashboard"):
         with mui.Paper:
             with mui.Typography:
-                html.h1("Scatter Chart",
+                html.h1(f"chart_{st.session_state['fig']}",
                     css={
                         "backgroundColor": "#808080",
                         "color":"white",
@@ -256,7 +258,7 @@ def add_dashboard_scatter(data_x,data_y):
                     })
 
         with dashboard.Grid(layout, draggableHandle=".draggable"):
-            with mui.Card(key="chart_1", 
+            with mui.Card(key=f"chart_{st.session_state['fig']}", 
                           sx={"color": 'white', 'bgcolor': 'text.disable', 
                               "display": "flex", 'borderRadius': 2,  
                               "flexDirection": "column"}):
